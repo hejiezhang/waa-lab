@@ -1,5 +1,6 @@
 package edu.miu.waa_lab.service.impl;
 
+import edu.miu.waa_lab.entity.Comment;
 import edu.miu.waa_lab.entity.Post;
 import edu.miu.waa_lab.entity.dto.PostDto;
 import edu.miu.waa_lab.repository.PostRepo;
@@ -7,11 +8,13 @@ import edu.miu.waa_lab.service.PostService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 public class PostServiceImpl implements PostService {
 
@@ -85,6 +88,21 @@ public class PostServiceImpl implements PostService {
         return postRepo.findByAuthorContaining(text).stream()
                 .map(post -> modelMapper.map(post, PostDto.class))
                 .collect(Collectors.toList());
+    }
+
+    //add a comment that will be associated with its post
+    @Override
+    public Comment addCommentToPost(Long postId, Comment comment) {
+        Post post = postRepo.findById(postId)
+                .orElseThrow(() -> new RuntimeException("Post not found"));
+
+        post.getComments().add(comment);
+        return postRepo.save(post).getComments().get(post.getComments().size() - 1);
+    }
+
+    @Override
+    public List<Post> findByTitle(String title) {
+        return postRepo.findByTitle(title);
     }
 
 }

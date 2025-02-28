@@ -1,5 +1,7 @@
 package edu.miu.waa_lab.controller;
 
+import edu.miu.waa_lab.entity.Comment;
+import edu.miu.waa_lab.entity.Post;
 import edu.miu.waa_lab.entity.dto.PostDto;
 import edu.miu.waa_lab.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,19 @@ public class PostController {
         } else {
             return postService.getAllPosts();
         }
+    }
+
+    // localhost:8080/posts/101/comments
+    @PostMapping("/{postId}/comments")
+    public Comment addCommentToPost(@PathVariable Long postId, @RequestBody Comment comment) {
+        return postService.addCommentToPost(postId, comment);
+    }
+
+    // Find posts by title
+    //GET /api/posts/search?title={title}
+    @GetMapping("/search")
+    public List<Post> findPostsByTitle(@RequestParam String title) {
+        return postService.findByTitle(title);
     }
 
 }

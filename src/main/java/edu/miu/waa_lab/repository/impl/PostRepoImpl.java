@@ -8,35 +8,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+//@Repository
+//public class PostRepoImpl implements PostRepo {
+
 @Repository
-public class PostRepoImpl implements PostRepo {
+public class PostRepoImpl {
 
     private static List<Post> posts;
     private long idCounter = 200;
 
     static {
         posts = new ArrayList<Post>();
-        Post post1 = new Post(101L, "AAA", "Hello", "Tom");
-        Post post2 = new Post(102L, "BBB", "How are you", "John");
-        Post post3 = new Post(103L, "CCC", "Good bye", "Jack");
-        Post post4 = new Post(104L, "DDD", "What's up", "Tom");
+        Post post1 = new Post(101L, "AAA", "Hello", "Tom", null);
+        Post post2 = new Post(102L, "BBB", "How are you", "John", null);
+        Post post3 = new Post(103L, "CCC", "Good bye", "Jack", null);
+        Post post4 = new Post(104L, "DDD", "What's up", "Tom", null);
         posts.add(post1);
         posts.add(post2);
         posts.add(post3);
         posts.add(post4);
     }
 
-    @Override
+    //@Override
     public List<Post> findAll() {
         return posts;
     }
 
-    @Override
+    //@Override
     public Optional<Post> findById(long id) {
         return posts.stream().filter(p -> p.getId() == id).findFirst();
     }
 
-    @Override
+    //@Override
     public Post save(Post post) {
         if(post.getId() == 0) {
             // Creating new post
@@ -50,12 +53,12 @@ public class PostRepoImpl implements PostRepo {
         return post;
     }
 
-    @Override
+    //@Override
     public void deleteById(long id) {
         posts.removeIf(p -> p.getId() == id);
     }
 
-    @Override
+    //@Override
     public List<Post> findByAuthor(String author) {
         List<Post> result = new ArrayList<>();
         for(Post post : posts) {
@@ -66,7 +69,7 @@ public class PostRepoImpl implements PostRepo {
         return result;
     }
 
-    @Override
+    //@Override
     public List<Post> findByAuthorContaining(String text) {
         List<Post> result = new ArrayList<>();
         for(Post post : posts) {
