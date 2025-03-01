@@ -1,5 +1,6 @@
 package edu.miu.waa_lab.controller;
 
+import edu.miu.waa_lab.aspect.annotation.ExecutionTime;
 import edu.miu.waa_lab.entity.Post;
 import edu.miu.waa_lab.entity.User;
 import edu.miu.waa_lab.service.UserService;
@@ -22,6 +23,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
+    @ExecutionTime
     @GetMapping("/{id}")  // localhost:8080/users/100
     public ResponseEntity<User> getUserById(@PathVariable("id") long id){
         User user = userService.getUserById(id);
