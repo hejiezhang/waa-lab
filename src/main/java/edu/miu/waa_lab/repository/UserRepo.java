@@ -7,9 +7,12 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String username);
 
     // Query to find users with more than 'n' posts
     @Query("SELECT u FROM User u WHERE SIZE(u.posts) > :n")
